@@ -31,4 +31,13 @@ public class Facing : NetworkBehaviour {
 	{
 		animator.SetInteger("direction", direction);
 	}
+
+	public Vector2 GetFacingVector ()
+	{
+		if (direction == 0) return new Vector2(0, 1);
+		if (direction == 1) return new Vector2(1, 0);
+		if (direction == 2) return new Vector2(0, -1);
+		if (direction == 3) return new Vector2(-1, 0);
+		else return Vector2.zero;
+	}
 }

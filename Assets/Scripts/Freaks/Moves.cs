@@ -39,17 +39,7 @@ public class Moves : NetworkBehaviour {
 
 	void Move ()
 	{
-		Vector2 movement = GetMovementVector(facing.direction);
+		Vector2 movement = facing.GetFacingVector();
 		rb.AddForce(movement * speed);
-	}
-
-	Vector2 GetMovementVector (int newDirection)
-	{
-		Vector2 movementVector = new Vector2(0, 0);
-		if (newDirection == 0) movementVector = new Vector2(0, 1);
-		if (newDirection == 1) movementVector = new Vector2(1, 0);
-		if (newDirection == 2) movementVector = new Vector2(0, -1);
-		if (newDirection == 3) movementVector = new Vector2(-1, 0);
-		return movementVector;
 	}
 }
