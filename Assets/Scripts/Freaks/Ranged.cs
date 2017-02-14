@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.Networking;
 using UnityEngine;
 
-public class Ranged : MonoBehaviour {
+public class Ranged : NetworkBehaviour {
 	Moves moves;
 	Animator animator;
 	Facing facing;
@@ -38,7 +39,7 @@ public class Ranged : MonoBehaviour {
 		facing.canTurn = false;
 		animator.SetBool("attacking", true);
 
-		Shoot();
+		CmdShoot(facing.GetFacingVector());
 		yield return new WaitForSeconds(attackDuration);
 
 		canShoot = true;
@@ -47,10 +48,12 @@ public class Ranged : MonoBehaviour {
 		animator.SetBool("attacking", false);
 	}
 
-	void Shoot ()
+	[Command]
+	void CmdShoot (Vector2 direction)
 	{
-		var projectile = Instantiate(projectilePrefab, transform.position, transform.rotation);
-		// projectile.GetComponent<Bullet>().ReceiveData(damage, transform, knockback);
-		projectile.GetComponent<Rigidbody2D>().AddForce(facing.GetFacingVector() * projectileSpeed);
+		var projectile = (GameObject)Instantiate(projectilePrefab, transform.position, transform.rotation);
+		projectile.GetComponent<Rigidbody2D>().velocity = direction * projectileSpeed;
+		NetworkServer.Spawn(projectile);
+		Destroy(projectile, 2.0f);
 	}
 }
