@@ -33,6 +33,7 @@ public class Ranged : MonoBehaviour {
 
 	IEnumerator ShootRoutine ()
 	{
+		canShoot = false;
 		moves.canMove = false;
 		facing.canTurn = false;
 		animator.SetBool("attacking", true);
@@ -40,6 +41,7 @@ public class Ranged : MonoBehaviour {
 		Shoot();
 		yield return new WaitForSeconds(attackDuration);
 
+		canShoot = true;
 		moves.canMove = true;
 		facing.canTurn = true;
 		animator.SetBool("attacking", false);

@@ -8,6 +8,7 @@ public class Facing : NetworkBehaviour {
 
 	public int direction;
 	public bool canTurn;
+	public bool strafing;
 
 	void Start ()
 	{
@@ -16,16 +17,22 @@ public class Facing : NetworkBehaviour {
 
 	void Update ()
 	{
-		if (!isLocalPlayer || !canTurn) return;
+		if (!isLocalPlayer || !canTurn || strafing) return;
 		UpdateAnimator();
 	}
 
-	public void ReceiveInput (float horizontal, float vertical)
+	public void ReceiveTurnInput (float horizontal, float vertical)
 	{
+		if (!canTurn || strafing) return;
 		if (vertical == 1) direction = 0;
 		if (horizontal == 1) direction = 1;
 		if (vertical == -1) direction = 2;
 		if (horizontal == -1) direction = 3;
+	}
+
+	public void ReceiveStrafeInput (bool strafe)
+	{
+		strafing = strafe;
 	}
 
 	void UpdateAnimator ()

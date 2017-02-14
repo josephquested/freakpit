@@ -17,6 +17,7 @@ public class InputController : NetworkBehaviour {
 	void FixedUpdate ()
 	{
 		if (!isLocalPlayer) return;
+		StrafeInput();
 		FacingInput();
 		MovementInput();
 	}
@@ -27,21 +28,25 @@ public class InputController : NetworkBehaviour {
 		RangedInput();
 	}
 
-	void FacingInput ()
-	{
-		facing.ReceiveInput(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-	}
-
 	void MovementInput ()
 	{
 		moves.ReceiveInput(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+	}
+
+	void FacingInput ()
+	{
+		facing.ReceiveTurnInput(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+	}
+
+	void StrafeInput ()
+	{
+		facing.ReceiveStrafeInput(Input.GetButton("Strafe"));
 	}
 
 	void RangedInput ()
 	{
 		if (Input.GetButtonDown("Fire1"))
 		{
-			print("bang!");
 			ranged.ReceiveInput();
 		}
 	}

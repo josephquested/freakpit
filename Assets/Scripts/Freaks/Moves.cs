@@ -28,7 +28,7 @@ public class Moves : NetworkBehaviour {
 			if (canMove)
 			{
 				animator.SetBool("moving", true);
-				Move();
+				Move(horizontal, vertical);
 			}
 		}
 		else
@@ -37,9 +37,24 @@ public class Moves : NetworkBehaviour {
 		}
 	}
 
-	void Move ()
+	void Move (float horizontal, float vertical)
 	{
-		Vector2 movement = facing.GetFacingVector();
-		rb.AddForce(movement * speed);
+		if (facing.strafing)
+		{
+			rb.AddForce(GetVectorFromFloats(horizontal, vertical) * speed);
+		}
+		else
+		{
+			rb.AddForce(facing.GetFacingVector() * speed);
+		}
+	}
+
+	Vector2 GetVectorFromFloats (float horizontal, float vertical)
+	{
+		if (vertical == 1) return new Vector2(0, 1);
+		if (horizontal == 1) return new Vector2(1, 0);
+		if (vertical == -1) return new Vector2(0, -1);
+		if (horizontal == -1) return new Vector2(-1, 0);
+		return Vector2.zero;
 	}
 }
