@@ -7,6 +7,7 @@ public class Facing : NetworkBehaviour {
 	Animator animator;
 
 	public int direction;
+	public bool canTurn;
 
 	void Start ()
 	{
@@ -15,7 +16,7 @@ public class Facing : NetworkBehaviour {
 
 	void Update ()
 	{
-		if (!isLocalPlayer) return;
+		if (!isLocalPlayer || !canTurn) return;
 		UpdateAnimator();
 	}
 
