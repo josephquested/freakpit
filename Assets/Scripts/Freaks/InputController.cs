@@ -1,7 +1,8 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.Networking;
 
-public class InputController : MonoBehaviour {
+public class InputController : NetworkBehaviour {
 	Moves moves;
 	Facing facing;
 
@@ -13,6 +14,7 @@ public class InputController : MonoBehaviour {
 
 	void FixedUpdate ()
 	{
+		if (!isLocalPlayer) return;
 		FacingInput();
 		MovementInput();
 	}

@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.Networking;
 using UnityEngine;
 
-public class Moves : MonoBehaviour {
+public class Moves : NetworkBehaviour {
 	Rigidbody2D rb;
 	Animator animator;
 	Facing facing;
@@ -21,17 +22,18 @@ public class Moves : MonoBehaviour {
 
 	public void ReceiveInput (float horizontal, float vertical)
 	{
+		if (!isLocalPlayer) return;
 		if (horizontal != 0 || vertical != 0)
 		{
 			if (canMove)
 			{
-				animator.speed = 1;
+				animator.SetBool("moving", true);
 				Move();
 			}
 		}
 		else
 		{
-			animator.speed = 0;
+			animator.SetBool("moving", false);
 		}
 	}
 

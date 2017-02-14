@@ -1,8 +1,9 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.Networking;
 using UnityEngine;
 
-public class Facing : MonoBehaviour {
+public class Facing : NetworkBehaviour {
 	Animator animator;
 
 	public int direction;
@@ -14,6 +15,7 @@ public class Facing : MonoBehaviour {
 
 	void Update ()
 	{
+		if (!isLocalPlayer) return;
 		UpdateAnimator();
 	}
 
