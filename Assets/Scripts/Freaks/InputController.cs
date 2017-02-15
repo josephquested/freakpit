@@ -20,11 +20,6 @@ public class InputController : NetworkBehaviour {
 		StrafeInput();
 		FacingInput();
 		MovementInput();
-	}
-
-	void Update ()
-	{
-		if (!isLocalPlayer) return;
 		RangedInput();
 	}
 

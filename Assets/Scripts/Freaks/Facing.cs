@@ -17,7 +17,7 @@ public class Facing : NetworkBehaviour {
 
 	void Update ()
 	{
-		if (!isLocalPlayer || !canTurn || strafing) return;
+		if (!isLocalPlayer) return;
 		UpdateAnimator();
 	}
 
